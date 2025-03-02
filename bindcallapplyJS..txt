@@ -1,0 +1,19 @@
+const person = {
+    firstName:'vipin',
+    lastName:'kr',
+    getFullName: function(){
+        console.log(this.firstName + " "+ this.lastName);
+    }
+}
+
+var logName = function(lang1,lang2){
+    this.getFullName();
+    console.log('arguments: ' + lang1 + " "+ lang2);
+}
+
+var logPersonName = logName.bind(person);
+logPersonName();
+
+logName.call(person,'en','es');
+
+logName.apply(person,['en','es'])

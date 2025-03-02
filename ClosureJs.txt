@@ -1,0 +1,24 @@
+Closure: 
+Closure Javascript: 
+
+function greet(message){
+    return function(name){
+        console.log(message + " "+ name);
+    }
+}
+
+var f = greet('Hi');
+
+f('vipin');
+
+function outer(){
+    var outerVar = "this is outer variable";
+    
+    function inner(){
+        console.log(outerVar);
+    }
+
+    return inner;
+}
+var x = outer();
+console.dir(x);

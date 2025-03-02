@@ -1,0 +1,122 @@
+Array Example:
+
+a) for...of Loop:
+
+1) The for...of loop is used to iterate over values in an iterable object like an array, string, or map.
+2) It provides the actual values in the array (or other iterable), not the indices or keys.
+3) It is the preferred way to loop over arrays when you want the values directly.
+
+
+const arr = [10, 20, 30];
+
+for (const value of arr) {
+  console.log(value);  // Logs 10, 20, 30
+}
+
+b) for...in Loop:
+
+1) The for...in loop is used to iterate over enumerable properties (keys) of an object, 
+or the indexes of an array.
+2) It gives the keys (indices) of the array rather than the values.
+3) Not recommended for arrays if you only need values, because it may also iterate over additional
+ properties that may be 
+set on the array object (e.g., custom properties, or inherited properties).
+
+const arr = [10, 20, 30];
+arr.foo="xyz";
+
+for (const index in arr) {
+  console.log(arr[index]);  // Logs 10, 20, 30, xyz
+}
+
+Note: Use for..of for iterating over arrays instead of for.. in
+
+Object Example: 
+
+a) for...of Loop:
+
+1) The for...of loop is not directly applicable to plain objects because it is designed to work with
+ iterables (e.g., arrays, strings, maps, sets, etc.).
+2) However, you can use for...of to iterate over an array of object keys or values 
+(created using Object.keys(), Object.values(), or Object.entries()).
+
+Syntax (using Object.keys()):javascript
+
+for (const key of Object.keys(object)) {
+  console.log(key);           // Logs the key
+  console.log(object[key]);   // Logs the value associated with the key
+}
+Syntax (using Object.values()):javascript 
+
+for (const value of Object.values(object)) {
+  console.log(value);         // Logs the value
+}
+Syntax (using Object.entries()):javascript
+
+for (const [key, value] of Object.entries(object)) {
+  console.log(key);           // Logs the key
+  console.log(value);         // Logs the value
+}
+
+const person = {
+   age: 25,
+  greet: function() {
+    console.log('Hello!');
+  }  
+}
+const student = Object.create(person);
+student.name = 'alice';
+// Object.keys(student);
+// Object.values(student);
+for(const [key,value] of Object.entries(student)){
+    console.log(key);
+    console.log(value);
+}
+
+b) for...in loop:
+
+Example: for...in Loop Over an Object with a Prototype
+We'll create an object with some properties and then extend it using a prototype chain.
+
+// Create a parent object (prototype)
+const person = {
+  age: 25,
+  greet: function() {
+    console.log('Hello!');
+  }
+};
+
+// Create a child object that inherits from the person object
+const student = Object.create(person);
+student.name = 'Alice';
+
+// Use a for...in loop to iterate over the properties of the student object
+console.log('Using for...in on the student object:');
+for (const key in student) {
+  console.log(key); // Logs all the keys, including inherited ones
+}
+Output:
+
+Using for...in on the student object:
+name
+age         // Inherited from `person`
+greet          // Inherited from `person`
+
+Explanation:
+The student object has own property (name), which were explicitly set on it.
+The student object also inherits properties from the person object (via Object.create()), such as age and the greet method.
+The for...in loop iterates over both own properties (name) and inherited properties (age, greet) from the prototype chain.
+Avoiding Inherited Properties:
+If you only want to iterate over the object's own properties and not the inherited ones, 
+you can use hasOwnProperty() inside the loop to filter out the inherited properties:
+
+console.log('Using for...in with hasOwnProperty to filter out inherited properties:');
+for (const key in student) {
+  if (student.hasOwnProperty(key)) {
+    console.log(key); // Logs only the own properties: 'name' and 'age'
+  }
+}
+Output:
+Using for...in with hasOwnProperty to filter out inherited properties:
+name
+age
