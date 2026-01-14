@@ -1,0 +1,103 @@
+import _ from "lodash";
+// or
+import cloneDeep from "lodash/cloneDeep";
+const original = {
+ name: "Vipin",
+ skills: ["JS", "React"],
+ address: {
+   city: "Bangalore"
+ }
+};
+const copy = _.cloneDeep(original);
+copy.address.city = "Chennai";
+console.log(original.address.city); // "Bangalore"
+console.log(copy.address.city);     // "Chennai"
+
+👉 cloneDeep creates a completely independent copy, including nested objects & arrays.
+ 
+const shallow = { ...original };
+
+shallow.address.city = "Delhi";
+
+console.log(original.address.city); // "Delhi" ❌ mutated
+ 
+Shallow cloning only copies top-level references.Shallow cloning only copies top-level references.
+ 
+What _.cloneDeep handles well
+
+✅ Nested objects
+
+✅ Arrays
+
+✅ Dates
+
+✅ RegExp
+
+✅ Maps & Sets
+
+✅ Circular references
+
+ Example with circular reference:
+ 
+const obj = {};
+
+obj.self = obj;
+
+const cloned = _.cloneDeep(obj);
+
+console.log(cloned.self === cloned); // true
+ 
+Performance note (important)
+
+_.cloneDeep is expensive for large objects.
+
+👉 Use it only when needed, not inside:
+
+	•	tight loops
+
+	•	render functions
+
+	•	frequently called callbacksPerformance note (important)
+ 
+const copy = structuredClone(original);
+ 
+Using structuredClone (recommended when available)
+ 
+✅ Native
+
+✅ Faster
+
+❌ Not supported in very old browsers
+ 
+Why JSON.parse(JSON.stringify()) is dangerous ❌
+
+Looks simple but breaks silently
+ 
+const obj = {
+
+  name: "Vipin",
+
+  date: new Date(),
+
+  undef: undefined,
+
+  fn: () => "hi",
+
+  map: new Map()
+
+};
+
+const copy = JSON.parse(JSON.stringify(obj));
+
+console.log(copy);
+
+Date Converted to string ❌
+
+undefined Removed ❌
+
+function Removed ❌
+
+Map / Set Lost ❌
+
+Circular refs ❌ Throws error
+ 
