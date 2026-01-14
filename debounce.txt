@@ -1,0 +1,41 @@
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    console.log('args: ' + args);
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+ 
+const handleInput = debounce((event, extra) => {
+  console.log('Input stopped for 5000 ms value:' + event.target.value);
+  console.log(extra);
+}, 5000);
+ 
+document
+  .getElementById('inputField')
+  .addEventListener('input', (event) => handleInput(event, 5));
+
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    console.log('args: ' + args);
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+ 
+const obj = {
+  name: 'vipin',
+  handleInput(event, extra) {
+    console.log('name: ' + this.name);
+    console.log('Input stopped for 5000 ms value: ' + event.target.value);
+    console.log(extra);
+  },
+};
+ 
+const handleInput = debounce(obj.handleInput, 5000);
+ 
+document
+  .getElementById('inputField')
+  .addEventListener('input', (event) => handleInput.call(obj, event, 5));
