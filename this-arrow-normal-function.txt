@@ -1,0 +1,33 @@
+1) const person = { 
+firstName: 'vipin',
+lastName: 'kr',
+getFullName: function() {
+console.log(this.firstName + " " + this.lastName);
+ } 
+}; 
+person.getFullName(); // vipin kr
+
+2) 
+Arrow functions don’t bind their own this.
+Instead, they capture this from the lexical scope where they were defined.
+Cant use call,bind and apply with arrow function
+
+const person = { 
+firstName: 'vipin',
+lastName: 'kr',
+getFullName: () => {
+console.log(this.firstName + " " + this.lastName); 
+ } 
+};
+person.getFullName(); // undefined undefined
+
+3) const person = { 
+firstName: 'vipin',
+lastName: 'kr',
+getFullName: () => {
+console.log(this.firstName + " " + this.lastName); 
+ } 
+};
+window.firstName = 'vip';
+window.lastName = 'kr';
+person.getFullName(); // vip kr in browser, undefined undefined in node
